@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TempoScolaire — Travail serein</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="top-bar">
+        <div>
+          <h1>TempoScolaire</h1>
+          <p class="subtitle">Ton espace de travail doux et motivant.</p>
+        </div>
+        <button id="parentToggle" class="ghost-button" type="button">Mode parents</button>
+      </header>
+
+      <main>
+        <section id="home" class="panel active">
+          <div class="welcome">
+            <h2>Bonjour 👋</h2>
+            <p class="soft">Aujourd'hui, tu peux travailler jusqu'à 4h maximum 👍</p>
+            <div class="card-grid">
+              <button class="card" data-target="pdf">
+                <span class="icon">📘</span>
+                <span>Mes cours (PDF)</span>
+              </button>
+              <button class="card" data-target="notes">
+                <span class="icon">📝</span>
+                <span>Mes notes</span>
+              </button>
+              <button class="card" data-target="timer">
+                <span class="icon">⏱️</span>
+                <span>Chrono de travail</span>
+              </button>
+              <button class="card" data-target="ai">
+                <span class="icon">🤖</span>
+                <span>Aide IA</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="pdf" class="panel">
+          <div class="panel-header">
+            <h2>📘 Mes cours (PDF)</h2>
+            <button class="ghost-button" data-target="home">Retour</button>
+          </div>
+          <div class="panel-body">
+            <div class="upload-area">
+              <label class="upload">
+                <input type="file" id="pdfInput" accept="application/pdf" />
+                Importer un PDF
+              </label>
+              <p class="helper">Lecture fluide, zoom simple et fond doux pour rester concentré.</p>
+            </div>
+            <div class="pdf-viewer">
+              <iframe id="pdfFrame" title="Lecteur PDF" sandbox="allow-same-origin allow-scripts"></iframe>
+              <div class="pdf-tools">
+                <button class="pill" data-highlight="important">Surligner jaune (important)</button>
+                <button class="pill" data-highlight="understood">Surligner vert (compris)</button>
+                <button class="pill" data-highlight="review">Surligner rouge (à revoir)</button>
+                <button class="pill" id="addBookmark">Marquer la page</button>
+              </div>
+            </div>
+            <div class="pdf-notes">
+              <h3>Notes liées au PDF</h3>
+              <textarea id="pdfNote" rows="4" placeholder="Ajoute une note liée à la page actuelle..."></textarea>
+              <button id="savePdfNote" class="primary-button">Sauvegarder la note</button>
+              <ul id="pdfNoteList" class="note-list"></ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="notes" class="panel">
+          <div class="panel-header">
+            <h2>📝 Mes notes</h2>
+            <button class="ghost-button" data-target="home">Retour</button>
+          </div>
+          <div class="panel-body">
+            <div class="subject-tabs" role="tablist">
+              <button class="tab active" data-subject="Francais">Français</button>
+              <button class="tab" data-subject="Maths">Maths</button>
+              <button class="tab" data-subject="Histoire-Géo">Histoire-Géo</button>
+              <button class="tab" data-subject="SVT">SVT</button>
+              <button class="tab" data-subject="Anglais">Anglais</button>
+            </div>
+            <div class="notes-area">
+              <div class="note-toolbar">
+                <button class="pill" data-emoji="⭐">⭐</button>
+                <button class="pill" data-emoji="✅">✅</button>
+                <button class="pill" data-emoji="📌">📌</button>
+                <button class="pill" data-emoji="💡">💡</button>
+                <button class="pill" data-emoji="🧠">🧠</button>
+              </div>
+              <textarea id="notesInput" rows="12" placeholder="Écris ici tes notes..."></textarea>
+              <div class="drawing">
+                <label>Petits dessins (simple)</label>
+                <canvas id="doodle" width="520" height="180"></canvas>
+                <button id="clearDoodle" class="ghost-button">Effacer</button>
+              </div>
+              <p class="helper">Sauvegarde automatique activée. Mode anti-distraction : écran épuré.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="timer" class="panel">
+          <div class="panel-header">
+            <h2>⏱️ Chrono intelligent</h2>
+            <button class="ghost-button" data-target="home">Retour</button>
+          </div>
+          <div class="panel-body">
+            <div class="timer-card">
+              <div class="time-display" id="timeDisplay">25:00</div>
+              <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+              </div>
+              <p id="timerStatus" class="soft">Bloc de travail 1 sur 2 (25 min)</p>
+              <div class="timer-actions">
+                <button id="startTimer" class="primary-button">Démarrer</button>
+                <button id="pauseTimer" class="ghost-button">Pause</button>
+                <button id="resetTimer" class="ghost-button">Réinitialiser</button>
+              </div>
+              <p class="helper">Après 2 blocs, une pause plus longue arrive automatiquement.</p>
+              <p id="dayCap" class="soft">Temps travaillé aujourd'hui : 0 min / 240 min</p>
+            </div>
+            <div class="gentle-message" id="dayMessage"></div>
+          </div>
+        </section>
+
+        <section id="ai" class="panel">
+          <div class="panel-header">
+            <h2>🤖 Aide IA bienveillante</h2>
+            <button class="ghost-button" data-target="home">Retour</button>
+          </div>
+          <div class="panel-body">
+            <div class="ai-card">
+              <p>Notre IA observe uniquement des signaux simples : clavier, souris, lecture du PDF et écriture de notes.</p>
+              <ul>
+                <li>Si l'activité est régulière, le chrono continue.</li>
+                <li>Si tu t'arrêtes un peu, le chrono se met en pause tout seul.</li>
+                <li>Si tu changes d'onglet longtemps, le chrono se met en pause sans te juger.</li>
+              </ul>
+              <div class="ai-status">
+                <span id="activityIndicator">🙂</span>
+                <span id="activityText">Tout va bien, tu es dans ton rythme.</span>
+              </div>
+              <p class="helper">Cette IA n'est pas intrusive : elle ne regarde pas tes données, elle mesure seulement l'activité.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="parents" class="panel">
+          <div class="panel-header">
+            <h2>🧑‍🏫 Espace parents</h2>
+            <button class="ghost-button" data-target="home">Retour</button>
+          </div>
+          <div class="panel-body">
+            <div class="parents-card">
+              <p>Accès protégé. Entre le code familial pour afficher un résumé doux.</p>
+              <div class="parents-auth">
+                <input id="parentCode" type="password" placeholder="Code" />
+                <button id="parentAccess" class="primary-button">Accéder</button>
+              </div>
+              <div id="parentSummary" class="hidden">
+                <h3>Résumé du temps</h3>
+                <p id="parentTime">Temps de travail réel : 0 min</p>
+                <p id="parentSubjects">Matières travaillées : -</p>
+                <p class="helper">Aucune note scolaire ni résultat n'est visible.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
